@@ -1,32 +1,48 @@
 {
   "expo": {
-    "name": "todoApp",
-    "slug": "todoApp",
+    "name": "todoNext",
+    "slug": "todoNext",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon1.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash1.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#25292e"
-    },
+    "icon": "./assets/images/app-icon.png",
+    "scheme": "todonext",
+    "userInterfaceStyle": "automatic",
     "ios": {
-      "supportsTablet": true
+      "icon": "./assets/images/app-icon.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#F5F6F2",
+        "foregroundImage": "./assets/images/app-icon-foreground.png",
+        "monochromeImage": "./assets/images/app-icon-monochrome.png"
       },
-      "package": "isfak98.picture"
+      "predictiveBackGestureEnabled": false,
+      "package": "com.isfak98.todoNext"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#208AEF",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ],
+      "expo-sqlite"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
     },
     "extra": {
+      "router": {},
       "eas": {
-        "projectId": "765f2360-4d1b-4d3e-a1e4-64157101545a"
+        "projectId": "5c428cea-462f-410f-bbab-0cca18e910c0"
       }
     }
   }
