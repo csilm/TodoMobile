@@ -1,8 +1,23 @@
+import { RecurringTemplates } from "@/components/recurring-templates";
+import {
+  createTask,
+  deleteTask,
+  generateDueTemplateTasks,
+  readTasks,
+  readTemplates,
+  setTaskCompleted,
+  updateTask,
+  type Priority,
+  type RecurringTemplate,
+  type Task,
+  type TaskInput,
+} from "@/lib/tasks";
 import { useSQLiteContext } from "expo-sqlite";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Image,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
@@ -20,21 +35,6 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 
-import { RecurringTemplates } from "@/components/recurring-templates";
-import {
-  createTask,
-  deleteTask,
-  generateDueTemplateTasks,
-  readTasks,
-  readTemplates,
-  setTaskCompleted,
-  updateTask,
-  type Priority,
-  type RecurringTemplate,
-  type Task,
-  type TaskInput,
-} from "@/lib/tasks";
-
 const colors = {
   background: "#F5F6F2",
   surface: "#FFFFFF",
@@ -46,6 +46,7 @@ const colors = {
   darkGreen: "#173D32",
   orange: "#C7773D",
   red: "#C24F48",
+  transparent: "transparent",
 };
 
 type TaskFilter = "all" | "open" | "done";
@@ -172,7 +173,7 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [templates, setTemplates] = useState<RecurringTemplate[]>([]);
-  const [filter, setFilter] = useState<TaskFilter>("all");
+  const [filter, setFilter] = useState<TaskFilter>("open");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -339,9 +340,9 @@ export default function HomeScreen() {
   }
 
   const filterOptions: { key: TaskFilter; label: string; count: number }[] = [
-    { key: "all", label: "All", count: tasks.length },
     { key: "open", label: "To do", count: openCount },
     { key: "done", label: "Done", count: completedCount },
+    { key: "all", label: "All", count: tasks.length },
   ];
 
   const dueDateOptions: { label: string; value: string | null }[] = [
@@ -368,7 +369,11 @@ export default function HomeScreen() {
           <View style={styles.header}>
             <View style={styles.brandRow}>
               <View style={styles.brandMark}>
-                <Text style={styles.brandMarkText}>d</Text>
+                <Image
+                  source={require("../../assets/images/Monemtum.png")}
+                  style={styles.brandLogo}
+                  resizeMode="contain"
+                />
               </View>
               <Text style={styles.brandName}>MOMENTUM</Text>
               <View style={styles.localBadge}>
@@ -748,7 +753,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 10,
-    backgroundColor: colors.green,
+    backgroundColor: colors.transparent,
     marginRight: 9,
   },
   brandMarkText: {
@@ -756,6 +761,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     lineHeight: 25,
+  },
+  brandLogo: {
+    width: "100%",
+    height: "100%",
   },
   brandName: {
     color: colors.text,
